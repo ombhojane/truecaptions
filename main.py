@@ -44,7 +44,7 @@ def validate_text(input_text):
     response = openai.Completion.create(
         engine="text-davinci-002",
         prompt=f"Is '{input_text}' valid?",
-        max_tokens=50,
+        max_tokens=1000,
         stop=None,
         temperature=0.7,
     )
@@ -62,7 +62,7 @@ def answer_question(question):
     response = openai.Completion.create(
         engine="text-davinci-002", 
         prompt=question,
-        max_tokens=50,  # Adjust the max tokens as needed
+        max_tokens=1000,  # Adjust the max tokens as needed
         stop=None,  
         temperature=0.7,  # Adjust the temperature parameter for response randomness
     )
@@ -93,7 +93,7 @@ if validate_button and input_text:
     if "valid" in validation_result.lower():
         st.success(validation_result)
     else:
-        st.error(validation_result)
+        st.warning(validation_result)
 
 
 if uploaded_image is not None:
@@ -126,4 +126,4 @@ if uploaded_image is not None:
         if "valid" in answer.lower():
             st.success(answer)
         else:
-            st.error(answer)
+            st.warning(answer)
