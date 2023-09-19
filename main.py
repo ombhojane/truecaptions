@@ -73,8 +73,7 @@ def answer_question(question):
     else:
         return "No answer found."
 
-
-st.title("AI, Is This Caption Valid?")
+st.title("True Captions: Let's validate your content!")
 
 # Text input field
 input_text = st.text_input("Enter text to validate:")
