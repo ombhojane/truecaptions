@@ -5,8 +5,8 @@ from clarifai_grpc.grpc.api.status import status_code_pb2
 import openai
 
 # Set your Clarifai API credentials
-CLARIFAI_API_KEY = 'a672209162e641af9deb4ba82b8606c6'
-openai.api_key = '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'
+CLARIFAI_API_KEY = st.secrets["CLARIFAI_API_KEY"]
+openai.api_key = st.secrets["openai_api_key"]
 
 # Initialize Clarifai channel and stub
 channel = ClarifaiChannel.get_grpc_channel()
@@ -115,7 +115,7 @@ if uploaded_image is not None:
         # Generate a question based on the caption
         question_image = generate_question_from_caption(image_caption)
 
-        st.subheader("Predicted Image Caption using Clarifai Image Caption Generator model:")
+        st.subheader("Predicted Image Caption using Clarifai Image Caption Generation Model:")
         st.write(image_caption)
         
 
