@@ -74,6 +74,7 @@ def answer_question(question):
         return "No answer found."
 
 st.title("True Captions: Let's validate your content!")
+st.write("Great Power comes Great Responsibility. As we increased the use of online news and social media, sometimes fake news and misinformation can be spread easily. This app helps you to validate your content before you share it with the world!🌎")
 
 # Text input field
 input_text = st.text_input("Enter text to validate:")
