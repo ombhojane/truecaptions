@@ -4,7 +4,6 @@ from clarifai_grpc.grpc.api import resources_pb2, service_pb2, service_pb2_grpc
 from clarifai_grpc.grpc.api.status import status_code_pb2
 import openai
 
-# Set your Clarifai API credentials
 CLARIFAI_API_KEY = st.secrets["CLARIFAI_API_KEY"]
 openai.api_key = st.secrets["openai_api_key"]
 
@@ -57,15 +56,14 @@ def validate_text(input_text):
         return "No answer found."
 
 def generate_question_from_caption(caption):
-    # You can customize the question format here
     return f"Is '{caption}' valid?"
 
 def answer_question(question):
     response = openai.Completion.create(
-        engine="text-davinci-002",  # You can choose a different engine based on your needs
+        engine="text-davinci-002", 
         prompt=question,
         max_tokens=50,  # Adjust the max tokens as needed
-        stop=None,  # Add any custom stop words if necessary
+        stop=None,  
         temperature=0.7,  # Adjust the temperature parameter for response randomness
     )
 
@@ -76,7 +74,6 @@ def answer_question(question):
         return "No answer found."
 
 
-# Streamlit app title
 st.title("AI, Is This Caption Valid?")
 
 # Text input field
@@ -90,20 +87,23 @@ uploaded_image = st.file_uploader("Upload an image", type=["jpg", "png", "jpeg"]
 
 
 if validate_button and input_text:
-    # Validate the input text
+    
     validation_result = validate_text(input_text)
 
     st.subheader("Validation Result:")
-    st.write(validation_result)
+    if "valid" in validation_result.lower():
+        st.success(validation_result)
+    else:
+        st.error(validation_result)
 
 
 if uploaded_image is not None:
-    # Display the uploaded image
+    
     st.image(uploaded_image, caption="Uploaded Image", use_column_width=True)
 
     # Process the uploaded image and get predictions
     image_bytes = uploaded_image.read()
-    model_id = 'general-english-image-caption-blip'  # Change this to your desired model ID
+    model_id = 'general-english-image-caption-blip' 
 
     output = process_image_with_clarifai(image_bytes, model_id)
 
@@ -123,4 +123,8 @@ if uploaded_image is not None:
         answer = answer_question(question_image)
 
         st.subheader("Answer:")
-        st.write(answer)
+
+        if "valid" in answer.lower():
+            st.success(answer)
+        else:
+            st.error(answer)
